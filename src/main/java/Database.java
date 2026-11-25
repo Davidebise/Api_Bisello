@@ -16,4 +16,12 @@ public class Database {
         }
         return instance;
     }
+
+    private boolean TestConnection() throws SQLException {
+        try{
+            return connection.isValid(5);
+        }catch(SQLException e){
+            return false;
+        }
+    }
 }
