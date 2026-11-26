@@ -36,4 +36,21 @@ public class API {
         Pokemon pokemon = gson.fromJson(response.body(),Pokemon.class);  //gli attributi devono avere nome uguale rispetto a quelli del json
         return pokemon;
     }
+
+    public Pokemon getPokemonById(int id) throws IOException, InterruptedException {  //si usa request perchè devo fare una richiesta di dati
+        HttpRequest request = HttpRequest.newBuilder()
+                .GET()
+                .uri(URI.create(urlBase + "/pokemon/" + id)) //design pattern builder
+                .build(); //crea la richiesta ma non la manda
+
+        HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        if(response.statusCode()!=200){
+            throw new IOException("Errore: "+response.statusCode());
+        }
+
+        Gson gson = new Gson();
+
+        Pokemon pokemon = gson.fromJson(response.body(),Pokemon.class);  //gli attributi devono avere nome uguale rispetto a quelli del json
+        return pokemon;
+    }
 }
